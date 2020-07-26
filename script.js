@@ -1,60 +1,95 @@
-// Assignment Code
-// generateBtn is grabbing the button labeled generate in html
 var generateBtn = document.querySelector("#generate");
-var userLength = 
 
-// Write password to the #password input
-//we're making a function called writePassword() 
-function writePassword() {
+var lowerCaseCharacters = "abcdefghijklmnopqrstuvwxyz";
+var upperCaseCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var specialsCharacters = "`~!@#$%^&*()_-+={[]}|:;\'<,>.?/";
+var numberCharacters = "0123456789";
 
-  // variable password is equal to 
-  var password = generatePassword();
-  
-  // variable passwordText is grabbing the card body in html where the password text is diaplayed
-  // so when I use passwordTExt, it will reference that area 
-  var passwordText = document.querySelector("#password");
+var lowerCaseArray = "abcdefghijklmnopqrstuvwxyz".split("");
+var upperCaseArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+var specialArray = "`~!@#$%^&*()_-+={[]}|:;\'<,>.?/".split(""); 
+var numberArray = "0123456789".split("");
 
-  // passwordText variable now has a value of variable 
-  passwordText.value = password;
+var userConfirmNumber = false;
+var userConfirmUpper = false;
+var userConfirmLower = false;
+var userConfirmSpecial = false;
+var userPasswordLength = 0;
 
+var minLen = 8;
+var maxLen = 128;
+var _password = "";
+
+userPasswordLength = prompt("Enter the length of your password");
+while (userPasswordLength < minLen) {
+  alert("Length of password has to be greater than 7");
+  userPasswordLength = prompt("Enter the length of your password");
+if (userPasswordLength > maxLen)
+  alert("Length of password has to be lass than 129");
+} 
+
+userConfirmNumber = confirm("Do you want numbers in your password?");
+userConfirmUpper = confirm("Do you want uppercase letters?");
+userConfirmLower = confirm("Do you want lowercase letters?");
+userConfirmSpecial = confirm("Do you want special characters?");
+
+function passwordLogicMath() {
+if (userConfirmNumber) {
+  var index = Math.floor(Math.random() * numberArray.length);
+  _password += numberArray[index];
+}
+console.log(_password);
+
+if (userConfirmUpper) {
+  var index = Math.floor(Math.random() *ray.length);
+  _password +=ray[index];
+}
+console.log(_password);
+
+if (userConfirmLower) {
+  var index = Math.floor(Math.random() * ay.length);
+  _password += ay[index];
+}
+console.log(_password);
+
+if (userConfirmSpecial) {
+  var index = Math.floor(Math.random() * specialArray.length);
+  _password += specialArray[index];
+}
 }
 
-// Add event listener to generate button
-generateBtn.addEventListener("click", function generatePassword() {
-      var userLength = prompt("how long 8 to 128")
-      var result           = '';
-      var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      var charactersLength = characters.length;
-      for ( var i = 0; i < length; i++ ) {
-        var result = characters.charAt(Math.floor(Math.random() * charactersLength));
-      }
-      return result;
-  })
+function generatePassword() {
+  var remaining = userPasswordLength - _password.length;
+  var allStrings = "";
 
-  //   var userLength = prompt("Please select your password length from 8-128");
-//   var length = userLength.value
-//   console.log=userLength
-//       charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!()*+,-./:;<>=?@^_{}|~`",
-//       retVal = "";
-//   for (var i = 0, n = userLength.value; i < length; ++i) {
-//       retVal += charset.charAt(Math.floor(Math.random() * n));
-//   }
-//   return retVal;
-// })
-  // writePassword;
+  if (userConfirmNumber) {
+    allStrings += numberCharacters;
+  }
+  if (userConfirmUpper) {
+    allStrings += upperCaseCharacters;
+  }
+  if (userConfirmLower) {
+    allStrings += lowerCaseCharacters;
+  }
+  if (userConfirmSpecial) {
+    allStrings += specialsCharacters;
+  }
+  console.log(allStrings);
 
-  // function makeid(length) {
-    
+  for (var i = 0; i < remaining; i++) {
+    var index = Math.floor(Math.random() * allStrings.length);
+    _password += allStrings[index]; 
+  }
 
+  console.log("Final password", _password);
+  return _password;
+}
 
+function writePassword() {
 
-// on button click, 
-  // prompt appears with user selecting length of password 8-128 characters (if not in that range, give error message saying try again)
-  // confirm appears with "I would like upper case"
-  // confirm appears with "I would like lower case"
-  // confirm appears with "I would like numerals case"
-  // confirm appears with "I would like special characters"
-    // a selection has to be made of one of the above 4 character types or tells you to try again
+  var password = generatePassword();
+  var passwordText = document.querySelector("#password");
+  passwordText.value = password;
+}
 
-
-// function generatePassword() {
+generateBtn.addEventListener("click", writePassword);
